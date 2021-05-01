@@ -13,7 +13,7 @@ const StackRoutes: React.FC = () => (
   <NavigationContainer>
     <Stack.Navigator
       headerMode="none"
-      initialRouteName="Home"
+      initialRouteName="Tabs"
       screenOptions={{ 
         cardStyle: {
           backgroundColor: colors.background,
