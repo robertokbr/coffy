@@ -1,0 +1,46 @@
+{
+  "products": [
+    {
+      "type": "food",
+      "name": "Cake",
+      "description": "Delicious chocolate cake ",
+      "price": 10.00,
+      "image_url": "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/vimdb/202685_0-803-5447-5447.jpg"
+    },
+    {
+      "type": "food",
+      "name": "Pancake",
+      "description": "Delicious pancake ",
+      "price": 10.00,
+      "image_url": "https://images-gmi-pmc.edge-generalmills.com/df109202-f5dd-45a1-99b4-f10939afd509.jpg"
+    },
+    {
+      "type": "food",
+      "name": "Eggs and bacon",
+      "description": "Two Delicious eggs and three sticks of bacon",
+      "price": 10.00,
+      "image_url": "https://media.istockphoto.com/photos/fried-eggs-and-bacon-picture-id1127356742"
+    },
+    {
+      "type": "drink",
+      "name": "Orange Juice",
+      "description": "super chilled orange juice",
+      "price": 10.00,
+      "image_url": "https://images.theconversation.com/files/291727/original/file-20190910-190044-1y5vgok.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=754&fit=clip"
+    },
+    {
+      "type": "drink",
+      "name": "lemon Juice",
+      "description": "super chilled lemon juice",
+      "price": 10.00,
+      "image_url": "https://budwigcenter.com/wp-content/uploads/2020/06/The-Amazing-Health-Benefits-Of-Raw-Lemon-Juice.png"
+    },
+    {
+      "type": "drink",
+      "name": "coffee",
+      "description": "GTA Hot Coffee",
+      "price": 10.00,
+      "image_url": "https://store-images.s-microsoft.com/image/apps.29972.14474337564596307.6c783b22-9460-4205-938c-2969961ed85c.aa21aff2-b2b2-411b-88bb-158187c6e238?mode=scale&q=90&h=1080&w=1920"
+    }
+  ]
+}
