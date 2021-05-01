@@ -4,9 +4,11 @@ import { useNavigation } from '@react-navigation/core';
 
 import * as S from './styles';
 import colors from '../../styles/colors';
+import { useOrder } from '../../hooks/useOrder';
 
 const Fab: React.FC = () => {
   const { navigate } = useNavigation();
+  const { orderProducts } = useOrder();
 
   const handleNavigate = useCallback(() => {
     navigate('CreateOrder')
@@ -27,11 +29,13 @@ const Fab: React.FC = () => {
       onPress={handleNavigate}
     >
       <S.Content>
-        <S.Notification>
-          <S.NotificationText>
-            3
-          </S.NotificationText>
-        </S.Notification>
+        {orderProducts.length > 0 && (
+          <S.Notification>
+            <S.NotificationText>
+              {orderProducts.length}
+            </S.NotificationText>
+          </S.Notification>
+        )}
         <FontAwesome name="hand-stop-o" size={24} color={colors.blackTwo} />
       </S.Content>
    </S.Container>
