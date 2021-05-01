@@ -8,6 +8,7 @@ interface InputProps {
   icon?: string;
   inputStyle?: Object;
   placeholder?: string;
+  defaultValue?: string;
   handleInputText?: (text: string) => void;
 }
 
@@ -15,6 +16,7 @@ const Input: React.FC<InputProps> = ({
   icon, 
   inputStyle, 
   placeholder,
+  defaultValue,
   handleInputText,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -34,6 +36,7 @@ const Input: React.FC<InputProps> = ({
         onBlur={() => setIsFocused(false)}
         onChangeText={handleChangeInputText}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         style={inputStyle}
       />
       <Feather 
