@@ -3,103 +3,110 @@ import { Entypo } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 
 import * as S from './styles';
-import items from '../../assets/items';
 import colors from '../../styles/colors';
 import { useNavigation } from '@react-navigation/core';
-
-interface OrderData {
-  image: any;
-  index: number;
-  quantity: number;
-}
+import { useOrder } from '../../hooks/useOrder';
+import Load from '../../components/Load';
+import noContentImg from '../../assets/illustrations/no-food.png'; 
 
 const CreateOrder: React.FC = () => {
   const { navigate } = useNavigation();
+  const { 
+    orderProducts, 
+    handleProductQuantity,
+    handleCreateOrder,
+  } = useOrder();
 
-  const [orderItem, setOrderItem] = useState<OrderData[]>([]);
-
-  useEffect(() => {
-    const orderData = items.map((item, index) => ({
-      image: item,
-      index,
-      quantity: 1,
-    }));
-
-    setOrderItem(orderData)
-  }, [items]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleNavigateBack = useCallback(() => {
-    return navigate('Gallery')
-  }, []);
+    navigate('Gallery');
+  }, [navigate]);
 
-  const handleQuantity = useCallback(({
-    index,
-    quantity,
-  }: Omit<OrderData, 'image'>) => {
-    setOrderItem(state => {
-      const items = [...state];
-      items[index].quantity += quantity;
+  const handleFinishOrder = useCallback(() => {
+    if (!orderProducts.length) return;
 
-      if (items[index].quantity < 0) {
-        items.splice(index, 1);
-      }
+    setIsLoading(true);
 
-      return items;
+    handleCreateOrder().then(_ => {
+      setIsLoading(false);
+      navigate('Gallery');
     });
-  }, []);
+  }, [handleCreateOrder, navigate]);
 
   return (
-    <S.Container>
-      <S.OrderList 
-        contentContainerStyle={{
-          paddingHorizontal: 24,
-        }}
-        data={orderItem}
-        keyExtractor={item => String(item.index)}
-        ListHeaderComponent={
-          <S.Header>
-            <S.HeaderContent>
-              <S.GoBackButton onPress={handleNavigateBack}>
-                <Feather 
-                  name="chevron-left" 
-                  size={24} 
-                  color={colors.backgroundThree}
-                />
-              </S.GoBackButton>
-            </S.HeaderContent>
-          </S.Header>
-        }
-        renderItem={({ item, index }) => (
-          <S.Item>
-          <S.ItemImage source={item.image} />
-          <S.TitleContainer>
-            <S.Title>
-              Panquecas
-            </S.Title>
-            <S.SubTitle>
-              720 ml
-            </S.SubTitle>
-          </S.TitleContainer>
-          <S.PickQuantity>
-            <S.MinusQuantity 
-              onPress={() => handleQuantity({index, quantity: -1})}
-            >
-            <Entypo name="minus" size={20} color={colors.blackTwo} />
-            </S.MinusQuantity>
-            <S.QuantityText>
-              {item.quantity}
-            </S.QuantityText>
-            <S.PlusQuantity 
-              onPress={() => handleQuantity({index, quantity: 1})}
-            >
-            <Entypo name="plus" size={20} color={colors.white} />
-            </S.PlusQuantity>
-          </S.PickQuantity>
-        </S.Item>
-        )}
-      >
-      </S.OrderList>
-    </S.Container>
+    <>
+      <S.Container>
+        <S.OrderList 
+          contentContainerStyle={{
+            paddingHorizontal: 24,
+          }}
+          data={orderProducts}
+          keyExtractor={item => item.product.id}
+          ListHeaderComponent={
+            <S.Header>
+              <S.HeaderContent>
+                <S.GoBackButton onPress={handleNavigateBack}>
+                  <Feather 
+                    name="chevron-left" 
+                    size={24} 
+                    color={colors.backgroundThree}
+                  />
+                </S.GoBackButton>
+              </S.HeaderContent>
+            </S.Header>
+          }
+          ListEmptyComponent={
+            <S.NoContentContainer>
+              <S.NoContentImage source={noContentImg} />
+              <S.NoContentTitle>
+                No Food selected
+              </S.NoContentTitle>
+            </S.NoContentContainer>
+          }
+          renderItem={({ item: { product, quantity } }) => (
+            <S.Item>
+            <S.ItemImage source={{ uri: product.image_url }} />
+            <S.TitleContainer>
+              <S.Title>
+                {product.name}
+              </S.Title>
+              <S.SubTitle numberOfLines={1}>
+                {product.description}
+              </S.SubTitle>
+            </S.TitleContainer>
+            <S.PickQuantity>
+              <S.MinusQuantity 
+                onPress={() => handleProductQuantity({ product, quantity: -1})}
+              >
+              <Entypo name="minus" size={20} color={colors.blackTwo} />
+              </S.MinusQuantity>
+              <S.QuantityText>
+                {quantity}
+              </S.QuantityText>
+              <S.PlusQuantity 
+                onPress={() => handleProductQuantity({ product, quantity: 1})}
+              >
+              <Entypo name="plus" size={20} color={colors.white} />
+              </S.PlusQuantity>
+            </S.PickQuantity>
+          </S.Item>
+          )}
+        >
+        </S.OrderList>
+      </S.Container>
+      {isLoading && <Load isShadow />}
+      <S.Footer>
+        <S.Button onPress={handleFinishOrder}>
+          <S.ButtonIcon>
+            <Feather name="arrow-right" size={20} color="#dd7329"/>
+          </S.ButtonIcon>
+          <S.ButtonText>
+            Finish Order
+          </S.ButtonText>
+        </S.Button>
+      </S.Footer>
+    </>
   );
 };
 

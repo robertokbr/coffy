@@ -1,26 +1,28 @@
 import { FlatList, RectButton } from 'react-native-gesture-handler';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 import styled from 'styled-components/native';
+import IProduct from '../../shared/models/IProduct';
 import colors from '../../styles/colors';
 
-interface OrderData {
-  image: any;
-  index: number;
+type IOrderProduct = {
+  product: IProduct;
   quantity: number;
 }
 
 export const Container = styled.View`
   flex: 1;
+  position: relative;
 `;
 
 export const Header = styled.View`
+`;
+
+export const HeaderContent = styled.View`
   width: 100%;
   padding-top: ${getStatusBarHeight() + 12};
   padding-bottom: 12px;
 `;
-
-export const HeaderContent = styled.View``;
 
 export const HeaderTitle = styled.Text`
   font-family: bold;
@@ -39,10 +41,30 @@ export const GoBackButton = styled(RectButton)`
 `;
 
 export const OrderList = styled(
-  FlatList as new () => FlatList<OrderData>
+  FlatList as new () => FlatList<IOrderProduct>
 )`
   width: 100%;
 `;
+
+export const NoContentContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+`;
+
+export const NoContentTitle = styled.Text`
+  font-family: medium;
+  font-size: 24px;
+  color: ${colors.white};
+  margin-top: 24px;
+`;
+
+export const NoContentImage = styled.Image`
+  height: 200px;
+  width: 200px;
+`;
+
 
 export const Item = styled.View`
   height: 74px;
@@ -109,4 +131,38 @@ export const SubTitle = styled.Text`
   font-family: medium;
   font-size: 12px;
   color: ${colors.blackTwo};
+`;
+
+export const Footer = styled.View`
+  padding: 0 24px ${getBottomSpace() + 24}px;
+`;
+
+export const Button = styled(RectButton)`
+  height: 56px;
+  background: #312927;
+  border-radius: 12px;
+  flex-direction: row;
+  align-items: center;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+`;
+
+export const ButtonIcon = styled.View`
+  background: rgba(0,0,0,0.1);
+  height: 56px;
+  width: 60px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  position: absolute;
+  left: 0;
+`;
+
+export const ButtonText = styled.Text`
+  color: #fff;
+  font-size: 18px;
+  font-family: regular;
+  text-align: center;
+  flex: 1;
 `;
