@@ -1,4 +1,5 @@
 import { View as MotiView } from 'moti';
+import { RectButton } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import colors from '../../styles/colors';
 
@@ -10,8 +11,8 @@ export const Container = styled.View`
   padding-bottom: 10%;
 `;
 
-export const Header = styled.KeyboardAvoidingView`
-  flex:1;
+export const Header = styled.View`
+  flex: 1;
   max-height: 300px;
   position: relative;
   align-items: center;
@@ -38,7 +39,8 @@ export const CommerceImage = styled.View`
 
 export const Content = styled(MotiView)`
   padding: 0 24px;
-  margin-top: 56px;
+  align-items: center;
+  width: 100%;
 `;
 
 export const Image = styled.Image`
@@ -52,7 +54,6 @@ export const Title = styled.Text`
   font-size: 28px;
   color: ${colors.black};
   text-align: center;
-  position: relative;
 `;
 
 export const Subtitle = styled.Text`
@@ -61,12 +62,7 @@ export const Subtitle = styled.Text`
   color: ${colors.blackTwo};
 `;
 
-export const Emoji = styled(MotiView)`
-  position: absolute;
-  margin-left: 8px;
-`;
-
-export const Button = styled.TouchableOpacity`
+export const Button = styled(RectButton)`
   height: 56px;
   background: #312927;
   border-radius: 12px;
@@ -74,20 +70,25 @@ export const Button = styled.TouchableOpacity`
   align-items: center;
   margin-top: 24px;
   overflow: hidden;
+  width: 100%;
+  position: relative;
 `;
 
 export const ButtonIcon = styled.View`
-  background: rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.1);
   height: 56px;
   width: 60px;
   align-items: center;
   justify-content: center;
+  border-radius: 12px;
+  position: absolute;
+  left: 0;
 `;
 
 export const ButtonText = styled.Text`
   color: #fff;
   font-size: 18px;
   font-family: regular;
-  flex: 1;
   text-align: center;
+  flex: 1;
 `;

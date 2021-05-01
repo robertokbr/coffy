@@ -1,75 +1,74 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
-import { Platform } from 'react-native';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
 import * as S from './styles';
-import commerceImage from '../../assets/commerce.jpeg';
+import { useAuth } from '../../hooks/useAuth';
 import Input from '../../components/Input/Input';
+import commerceImg from '../../assets/commerce.jpeg';
 
 const Home: React.FC = () => {
   const { navigate } = useNavigation();
+  const { signIn, user } = useAuth();
 
-  const [isDisplayed, setHeaderPosition] = useState(false);
+  const [isDisplayed, setIsDisplayed] = useState(false);
+
+  const [inputText, setInputText] = useState('');
 
   useEffect(() => {
-    setHeaderPosition(true);
-  }, [])
+    setIsDisplayed(true);
+    setInputText(user.name);
+  }, [user]);
 
-  const handleNavigate = useCallback(() => {
+  const handleCreateUser = useCallback(async () => {
+    if (inputText.length < 1) return;
+
+    await signIn(inputText);
+
     return navigate('Tabs');
-  } ,[]);
+  }, [navigate, signIn, inputText]);
+
+  const handleInputText = useCallback((text: string) => {
+    setInputText(text);
+  }, []);
 
   return (
-    <S.Container>
-      <S.Header
-       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-       style={{ flex: 1 }}
-       enabled
-      >
-        <S.HeaderContent
-          animate={{ translateY: isDisplayed ? 0 : - 201 }}
-        >
-          <S.CommerceImage>
-            <S.Image source={commerceImage} />
-          </S.CommerceImage>
-        </S.HeaderContent>
-      </S.Header>
-      <S.Content >
-        <S.Title>
-          Bem vindo ao v-commerce! {'\n'}
-          <S.Subtitle>
-            Digite seu nome para começar a pedir {' '}
-            <S.Emoji 
-              animate={{ translateY: isDisplayed ? 0 : 10 }}
-              transition={{
-                type: 'timing',
-                loop: true,
-                duration: 600,
-              }}
-            >
-              <S.Subtitle>
-                🥞
-              </S.Subtitle>
-            </S.Emoji>
-          </S.Subtitle>
-        </S.Title>
-        <Input 
-          placeholder="Digite seu nome..."  
-          icon="user" inputStyle={{ outline: 0 }}
-          handleInputText={e => console.log(e)}
-        />
-        <S.Button onPress={handleNavigate}>
-          <S.ButtonIcon>
-            <Feather name="arrow-right" size={20} color="#dd7329"/>
-          </S.ButtonIcon>
-          <S.ButtonText>
-            Continuar
-          </S.ButtonText>
-        </S.Button>
-      </S.Content>
-    </S.Container>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      style={{ flex: 1 }}
+      enabled
+    >
+      <S.Container>
+        <S.Header>
+          <S.HeaderContent animate={{ translateY: isDisplayed ? 0 : -201 }}>
+            <S.CommerceImage>
+              <S.Image source={commerceImg} />
+            </S.CommerceImage>
+          </S.HeaderContent>
+        </S.Header>
+        <S.Content>
+          <S.Title>
+            Wellcome to v-commerce!
+            {'\n'}
+            <S.Subtitle>Text your name to start to order 🥞</S.Subtitle>
+          </S.Title>
+          <Input
+            placeholder="Your name..."
+            icon="user"
+            handleInputText={handleInputText}
+            defaultValue={inputText}
+          />
+          <S.Button onPress={handleCreateUser}>
+            <S.ButtonText>Continuar</S.ButtonText>
+            <S.ButtonIcon>
+              <Feather name="arrow-right" size={20} color="#dd7329" />
+            </S.ButtonIcon>
+          </S.Button>
+        </S.Content>
+      </S.Container>
+    </KeyboardAvoidingView>
   );
-}
+};
 
 export default Home;
