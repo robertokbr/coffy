@@ -7,7 +7,6 @@ import colors from '../../styles/colors';
 export interface GalleryItemProps {
   key: string;
   render: () => JSX.Element;
-  isTitle: boolean;
 }
 
 export const Container = styled.View`
@@ -39,6 +38,14 @@ export const Image = styled.Image`
   border-radius: 30px;
 `;
 
+export const UserAvatar = styled(RectButton)`
+  height: 60px;
+  width: 60px;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const GoBackButton = styled(RectButton)`
   flex-direction: row;
   align-items: center;
@@ -49,7 +56,7 @@ export const GoBackButton = styled(RectButton)`
 `;
 
 export const Gallery = styled(
-  FlatList as new () => FlatList<GalleryItemProps>
+  FlatList as new () => FlatList<GalleryItemProps>,
 )``;
 
 export const GalleryTitle = styled.Text`
