@@ -1,22 +1,23 @@
 import React from 'react';
 import { 
-  RobotoSlab_500Medium, 
-  RobotoSlab_400Regular, 
-} from '@expo-google-fonts/roboto-slab';
-import { 
   useFonts, 
   Staatliches_400Regular, 
 } from '@expo-google-fonts/staatliches';
+import { 
+  SourceSansPro_400Regular, 
+  SourceSansPro_600SemiBold 
+} from '@expo-google-fonts/source-sans-pro';
 import { StatusBar, View } from 'react-native';
 
 import Load from './src/components/Load';
 import StackRoutes from './src/routes/stack.routes';
 import colors from './src/styles/colors';
+import HooksProvider from './src/hooks';
 
 const App: React.FC = () => {
   const [ isLoaded ] = useFonts({
-    regular: RobotoSlab_400Regular,
-    medium: RobotoSlab_500Medium,
+    regular: SourceSansPro_400Regular,
+    medium: SourceSansPro_600SemiBold,
     bold: Staatliches_400Regular,
   });
 
@@ -37,7 +38,9 @@ const App: React.FC = () => {
           flex: 1, 
         }}
       >
-        <StackRoutes/>
+        <HooksProvider>
+          <StackRoutes/>
+        </HooksProvider>
       </View>
     </>
   )
