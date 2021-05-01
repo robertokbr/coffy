@@ -3,6 +3,7 @@ import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 import styled from 'styled-components/native';
 import colors from '../../styles/colors';
+import IOrder from '../../shared/models/IOrder';
 
 interface StatusProps {
   isTheFirst: boolean;
@@ -14,19 +15,36 @@ export const Container = styled.View`
   justify-content: center;
 `;
 
+export const NoContentContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+`;
+
+export const NoContentTitle = styled.Text`
+  font-family: medium;
+  font-size: 24px;
+  color: ${colors.white};
+  margin-top: 24px;
+`;
+
+export const NoContentImage = styled.Image`
+  height: 200px;
+  width: 200px;
+`;
+
 export const Gallery = styled(
-  FlatList as new () => FlatList<any>
+  FlatList as new () => FlatList<IOrder>
 )`
   width: 100%;
 `;
-
 
 export const Header = styled.View`
   width: 100%;
   padding-top: ${getStatusBarHeight() + 12};
   padding-bottom: 24px;
 `;
-
 
 export const HeaderTitle = styled.Text`
   font-family: bold;
@@ -50,7 +68,7 @@ export const ItemImage = styled.Image`
   border-radius: 12px;
 `;
 
-export const PickItemButton = styled(RectButton)`
+export const CancelOrder = styled(RectButton)`
   height: 32px;
   width: 32px;
   border-radius: 16px;
@@ -58,6 +76,8 @@ export const PickItemButton = styled(RectButton)`
   justify-content: center;
   background: #fff;
   margin-right: 10px;
+  margin-top: auto;
+  margin-bottom: auto;
 `;
 
 export const TitleContainer = styled.View`
@@ -75,5 +95,5 @@ export const OrderPosition = styled.Text`
 export const OrderStatus = styled.Text<StatusProps>`
   font-family: medium;
   font-size: 12px;
-  color: ${props => props.isTheFirst ? '#9ef01a' : colors.blackTwo};
+  color: ${props => props.isTheFirst ? colors.green : colors.blackTwo};
 `;
