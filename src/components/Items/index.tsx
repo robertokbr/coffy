@@ -2,30 +2,37 @@ import React from 'react';
 import { Entypo } from '@expo/vector-icons';
 
 import * as S from './styles';
-import items from '../../assets/items';
 import colors from '../../styles/colors';
+import { useOrder } from '../../hooks/useOrder';
+import IProduct from '../../shared/models/IProduct';
 
-const Items: React.FC = () => {
+const Items: React.FC<{ products: IProduct[] }> = ({ products }) => {
+  const { orderProducts, handleAddOrderProducts } = useOrder();
+
   return (
     <S.ItemList>
-      {items.map(item => (
-        <S.Item>
-          <S.ItemImage source={item} />
+      {products.map(product => (
+        <S.Item key={product.id}>
+          <S.ItemImage source={{ uri: product.image_url }} />
           <S.TitleContainer>
-            <S.Title>
-              Panquecas
-            </S.Title>
-            <S.SubTitle>
-              720 ml
-            </S.SubTitle>
+            <S.Title>{product.name}</S.Title>
+            <S.SubTitle numberOfLines={1}>{product.description}</S.SubTitle>
           </S.TitleContainer>
-          <S.PickItemButton>
-           <Entypo name="check" size={20} color={colors.white} />
+          <S.PickItemButton onPress={() => handleAddOrderProducts(product)}>
+            <Entypo
+              name="check"
+              size={20}
+              color={
+                orderProducts.find(op => op.product === product)
+                  ? colors.green
+                  : colors.white
+              }
+            />
           </S.PickItemButton>
         </S.Item>
       ))}
     </S.ItemList>
   );
-}
+};
 
 export default Items;

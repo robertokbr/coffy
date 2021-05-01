@@ -1,4 +1,5 @@
 import { RectButton } from 'react-native-gesture-handler';
+
 import styled from 'styled-components/native';
 import colors from '../../styles/colors';
 
@@ -8,16 +9,17 @@ export const ItemList = styled.ScrollView.attrs({
   contentContainerStyle: {
     paddingHorizontal: 24,
     paddingVertical: 24,
-  }
+  },
 })``;
 
 export const Item = styled.View`
-  width: 320px;
+  width: 300px;
   height: 74px;
   margin-right: 16px;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
+  border-radius: 12px;
 `;
 
 export const ItemImage = styled.Image`
