@@ -12,7 +12,7 @@ export const ItemList = styled.ScrollView.attrs({
 })``;
 
 export const Item = styled.View`
-  width: 320px;
+  width: 300px;
   border-radius: 12px;
   overflow: hidden; 
   background: #fff;
@@ -24,7 +24,7 @@ export const ImageContainer = styled.View`
 `;
 
 export const ItemImage = styled.Image`
-  height: 180px;
+  height: 160px;
   width: 100%;
   border-radius: 12px;
 `;
