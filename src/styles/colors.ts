@@ -6,4 +6,5 @@ export default {
   black: '#020202',
   blackTwo: '#a6a6a6',
   white: '#e6e6e6',
+  green: '#9ef01a'
 }
