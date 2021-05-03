@@ -37,24 +37,21 @@ const AuthContextProvider: React.FC = ({ children }) => {
     })();
   }, []);
 
-  const signIn = useCallback(
-    async (user_name: string) => {
-      let user: IUser = JSON.parse(await AsyncStorage.getItem('@user'));
+  const signIn = useCallback(async (user_name: string) => {
+    let user: IUser = JSON.parse(await AsyncStorage.getItem('@user'));
 
-      if (!user || user.name !== userData.name) {
-        user = {
-          id: String(uuid.v4()),
-          name: user_name,
-          image_url: '',
-        };
+    if (!user || user.name !== user_name) {
+      user = {
+        id: String(uuid.v4()),
+        name: user_name,
+        image_url: '',
+      };
 
-        await AsyncStorage.setItem('@user', JSON.stringify(user));
-      }
+      await AsyncStorage.setItem('@user', JSON.stringify(user));
+    }
 
-      setUserData(user);
-    },
-    [userData.name],
-  );
+    setUserData(user);
+  }, []);
 
   const updateUser = useCallback(async (user: IUser) => {
     setUserData(state => ({
@@ -62,6 +59,7 @@ const AuthContextProvider: React.FC = ({ children }) => {
       ...user,
     }));
 
+    await AsyncStorage.removeItem('@user');
     await AsyncStorage.setItem('@user', JSON.stringify(user));
   }, []);
 

@@ -2,7 +2,7 @@ import React, { createContext, useCallback, useContext, useState } from 'react';
 import ICreateOrderDTO from '../shared/dtos/ICreateOrderDTO';
 import IOrder from '../shared/models/IOrder';
 import IProduct from '../shared/models/IProduct';
-import persistenceProvider from '../shared/providers/PersistenceProvider';
+import persistenceProvider from '../shared/firebase';
 import { useAuth } from './useAuth';
 
 type IOrderProduct = {

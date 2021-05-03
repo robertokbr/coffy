@@ -5,7 +5,7 @@ import { Alert } from 'react-native';
 import * as S from './styles';
 import colors from '../../styles/colors';
 import IOrder from '../../shared/models/IOrder';
-import persistenceProvider from '../../shared/providers/PersistenceProvider';
+import persistenceProvider from '../../shared/firebase';
 import Load from '../../components/Load';
 import noContentImg from '../../assets/illustrations/no-content.png';
 import noImageUser from '../../assets/illustrations/no-img-user.png';

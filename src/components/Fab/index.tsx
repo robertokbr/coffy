@@ -11,34 +11,32 @@ const Fab: React.FC = () => {
   const { orderProducts } = useOrder();
 
   const handleNavigate = useCallback(() => {
-    navigate('CreateOrder')
-  }, []);
+    navigate('CreateOrder');
+  }, [navigate]);
 
   return (
     <S.Container
       style={{
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: {
           width: 0,
           height: 10,
         },
         shadowOpacity: 0.51,
         shadowRadius: 13.16,
-        elevation: 3
+        elevation: 3,
       }}
       onPress={handleNavigate}
     >
       <S.Content>
         {orderProducts.length > 0 && (
           <S.Notification>
-            <S.NotificationText>
-              {orderProducts.length}
-            </S.NotificationText>
+            <S.NotificationText>{orderProducts.length}</S.NotificationText>
           </S.Notification>
         )}
         <FontAwesome name="hand-stop-o" size={24} color={colors.blackTwo} />
       </S.Content>
-   </S.Container>
+    </S.Container>
   );
 };
 

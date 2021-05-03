@@ -41,6 +41,7 @@ export const Content = styled(MotiView)`
   padding: 0 24px;
   align-items: center;
   width: 100%;
+  margin-top: 56px;
 `;
 
 export const Image = styled.Image`

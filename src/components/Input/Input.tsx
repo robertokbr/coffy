@@ -12,24 +12,27 @@ interface InputProps {
   handleInputText?: (text: string) => void;
 }
 
-const Input: React.FC<InputProps> = ({ 
-  icon, 
-  inputStyle, 
+const Input: React.FC<InputProps> = ({
+  icon,
+  inputStyle,
   placeholder,
   defaultValue,
   handleInputText,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
-  const handleChangeInputText = useCallback((text: string) => {
-    if (!handleInputText) return;
+  const handleChangeInputText = useCallback(
+    (text: string) => {
+      if (!handleInputText) return;
 
-    handleInputText(text)
-  }, [handleInputText]);
+      handleInputText(text);
+    },
+    [handleInputText],
+  );
 
   return (
     <S.Container isFocused={isFocused}>
-      <S.UserNameInput 
+      <S.UserNameInput
         keyboardAppearance="dark"
         placeholderTextColor={colors.blackTwo}
         onFocus={() => setIsFocused(true)}
@@ -39,13 +42,13 @@ const Input: React.FC<InputProps> = ({
         defaultValue={defaultValue}
         style={inputStyle}
       />
-      <Feather 
-        name={icon as any} 
-        color={ isFocused ? colors.primary : colors.white } 
-        size={24} 
+      <Feather
+        name={icon as any}
+        color={isFocused ? colors.primary : colors.white}
+        size={24}
       />
     </S.Container>
   );
-}
+};
 
 export default Input;
