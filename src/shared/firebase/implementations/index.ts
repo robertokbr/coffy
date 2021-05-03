@@ -112,6 +112,8 @@ class FirebasePersistenceProvider {
   }
 
   public async updateUserAvatar({ file, user_id }: IUploadUserAvatarDTO) {
+    console.log(user_id);
+
     return this.storage
       .ref(`users/user_${user_id}.jpg`)
       .put(file)

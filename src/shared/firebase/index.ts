@@ -1,4 +1,4 @@
-import FirebasePersistenceProvider from './implementations/FirebasePersistenceProvider';
+import FirebasePersistenceProvider from './implementations';
 
 const persistenceProvider = new FirebasePersistenceProvider();
 
