@@ -11,7 +11,7 @@ import colors from '../../styles/colors';
 import LargeItems from '../../components/LargeItems';
 import Items from '../../components/Items';
 import Fab from '../../components/Fab';
-import persistenceProvider from '../../shared/providers/PersistenceProvider';
+import persistenceProvider from '../../shared/firebase';
 import IProduct from '../../shared/models/IProduct';
 import Load from '../../components/Load';
 import noImageUser from '../../assets/illustrations/no-img-user.png';
@@ -101,32 +101,34 @@ const Gallery: React.FC = () => {
   const handleUpdateAvatar = useCallback(async () => {
     setIsLoading(true);
 
-    const result = (await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-      allowsMultipleSelection: false,
-      base64: true,
-    })) as ImagePickerReturn;
+    try {
+      const result = (await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+        allowsMultipleSelection: false,
+        base64: true,
+      })) as ImagePickerReturn;
 
-    if (!result.cancelled) {
-      const file = await fetch(result.uri);
+      if (!result.cancelled) {
+        const file = await fetch(result.uri);
 
-      const blob = await file.blob();
+        const blob = await file.blob();
 
-      const fileUrl = await persistenceProvider.updateUserAvatar({
-        file: blob,
-        user_id: user.id,
-        base64: result.base64,
-      });
+        const fileUrl = await persistenceProvider.updateUserAvatar({
+          file: blob,
+          user_id: user.id,
+          base64: result.base64,
+        });
 
-      user.image_url = fileUrl;
+        Object.assign(user, { image_url: fileUrl });
 
-      await updateUser(user);
+        await updateUser(user);
+      }
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   }, [updateUser, user]);
 
   if (products.length <= 0) {
