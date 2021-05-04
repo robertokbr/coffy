@@ -13,16 +13,16 @@ const StackRoutes: React.FC = () => (
   <NavigationContainer>
     <Stack.Navigator
       headerMode="none"
-      initialRouteName="Tabs"
-      screenOptions={{ 
+      initialRouteName="Home"
+      screenOptions={{
         cardStyle: {
           backgroundColor: colors.background,
-        }}
-      }
+        },
+      }}
     >
-      <Stack.Screen  name="Home" component={Home} />
-      <Stack.Screen  name="CreateOrder" component={CreateOrder} />
-      <Stack.Screen  name="Tabs" component={TabRouter} />
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="CreateOrder" component={CreateOrder} />
+      <Stack.Screen name="Tabs" component={TabRouter} />
     </Stack.Navigator>
   </NavigationContainer>
 );

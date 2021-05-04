@@ -9,23 +9,23 @@ import Orders from '../pages/Orders';
 
 const Tab = createBottomTabNavigator();
 
-const TabBarIconContainer: React.FC<{ focused: boolean }> = ({ 
+const TabBarIconContainer: React.FC<{ focused: boolean }> = ({
   focused,
-  children 
+  children,
 }) => (
   <MotiView
     animate={{
-      scale: focused ? 1 : 0.8, 
-      height: 48, 
+      scale: focused ? 1 : 0.8,
+      height: 48,
       width: 48,
-    }} 
-    style={{ 
-      borderRadius: 24, 
-      backgroundColor: 
-        focused ? colors.backgroundThree : colors.backgroundTwo,
+    }}
+    style={{
+      borderRadius: 24,
+      backgroundColor: focused ? colors.backgroundThree : colors.backgroundTwo,
       alignItems: 'center',
-      justifyContent: 'center' 
-    }}>
+      justifyContent: 'center',
+    }}
+  >
     {children}
   </MotiView>
 );
@@ -40,14 +40,14 @@ const TabRoutes: React.FC = () => (
             <TabBarIconContainer focused={focused}>
               <Feather name="grid" size={size} color={color} />
             </TabBarIconContainer>
-          )
+          );
         }
         if (route.name === 'Orders') {
           return (
             <TabBarIconContainer focused={focused}>
               <Feather name="list" size={size} color={color} />
             </TabBarIconContainer>
-          )
+          );
         }
       },
     })}
@@ -71,7 +71,7 @@ const TabRoutes: React.FC = () => (
       },
       inactiveTintColor: colors.blackTwo,
       activeTintColor: colors.primary,
-      showLabel: false
+      showLabel: false,
     }}
     initialRouteName="Gallery"
   >
