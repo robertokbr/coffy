@@ -34,9 +34,7 @@ export const NoContentImage = styled.Image`
   width: 200px;
 `;
 
-export const Gallery = styled(
-  FlatList as new () => FlatList<IOrder>
-)`
+export const Gallery = styled(FlatList as new () => FlatList<IOrder>)`
   width: 100%;
 `;
 
@@ -95,5 +93,5 @@ export const OrderPosition = styled.Text`
 export const OrderStatus = styled.Text<StatusProps>`
   font-family: medium;
   font-size: 12px;
-  color: ${props => props.isTheFirst ? colors.green : colors.blackTwo};
+  color: ${props => (props.isTheFirst ? colors.green : colors.blackTwo)};
 `;

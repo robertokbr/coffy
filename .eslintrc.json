@@ -29,6 +29,7 @@
     "prettier"
   ],
   "rules": {
+    "react/jsx-curly-newline": "off",
     "consistent-return": "off",
     "no-bitwise": "off",
     "no-param-reassign": "off",
