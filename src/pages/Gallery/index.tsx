@@ -139,6 +139,7 @@ const Gallery: React.FC = () => {
     <>
       <S.Container>
         <S.Gallery
+          showsVerticalScrollIndicator={false}
           ListHeaderComponent={
             <S.Header>
               <S.HeaderContent>
