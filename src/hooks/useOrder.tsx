@@ -14,7 +14,7 @@ interface IOrderContext {
   orderProducts: Array<IOrderProduct>;
   handleAddOrderProducts: (product: IProduct) => void;
   handleProductQuantity: (orderProduct: IOrderProduct) => void;
-  handleCreateOrder: () => Promise<void>;
+  handleCreateOrder: (details?: string) => Promise<void>;
   handleCancelOrder: (order: IOrder) => Promise<void>;
 }
 
