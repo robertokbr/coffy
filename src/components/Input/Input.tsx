@@ -9,6 +9,9 @@ interface InputProps {
   inputStyle?: Object;
   placeholder?: string;
   defaultValue?: string;
+  containerStyle?: Object;
+  numberOfLines?: number;
+  textAlignVertical?: 'bottom' | 'top' | 'center' | 'auto';
   handleInputText?: (text: string) => void;
 }
 
@@ -18,6 +21,9 @@ const Input: React.FC<InputProps> = ({
   placeholder,
   defaultValue,
   handleInputText,
+  containerStyle,
+  numberOfLines,
+  textAlignVertical,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -31,15 +37,20 @@ const Input: React.FC<InputProps> = ({
   );
 
   return (
-    <S.Container isFocused={isFocused}>
+    <S.Container isFocused={isFocused} style={containerStyle}>
       <S.UserNameInput
         keyboardAppearance="dark"
         placeholderTextColor={colors.blackTwo}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         onChangeText={handleChangeInputText}
+        autoCapitalize="sentences"
         placeholder={placeholder}
         defaultValue={defaultValue}
+        scrollEnabled
+        multiline={numberOfLines > 0}
+        numberOfLines={numberOfLines}
+        textAlignVertical={textAlignVertical}
         style={inputStyle}
       />
       <Feather

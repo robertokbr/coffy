@@ -9,7 +9,7 @@ export const Container = styled.View<InputProps>`
   width: 100%;
   height: 60px;
   padding: 0 16px;
-  background: rgba(0,0,0,0.02);
+  background: rgba(0, 0, 0, 0.02);
   border-radius: 12px;
   margin-top: 36px;
   flex-direction: row;
