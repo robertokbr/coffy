@@ -1,5 +1,8 @@
 import { FlatList, RectButton } from 'react-native-gesture-handler';
-import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-x-helper';
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from 'react-native-iphone-x-helper';
 
 import styled from 'styled-components/native';
 import IProduct from '../../shared/models/IProduct';
@@ -8,19 +11,18 @@ import colors from '../../styles/colors';
 type IOrderProduct = {
   product: IProduct;
   quantity: number;
-}
+};
 
 export const Container = styled.View`
   flex: 1;
   position: relative;
 `;
 
-export const Header = styled.View`
-`;
+export const Header = styled.View``;
 
 export const HeaderContent = styled.View`
   width: 100%;
-  padding-top: ${getStatusBarHeight() + 12};
+  padding-top: ${getStatusBarHeight() + 24}px;
   padding-bottom: 12px;
 `;
 
@@ -32,6 +34,13 @@ export const HeaderTitle = styled.Text`
   letter-spacing: 1px;
 `;
 
+export const Label = styled.Text`
+  font-family: medium;
+  font-size: 18px;
+  color: ${colors.black};
+  margin-top: 24px;
+`;
+
 export const GoBackButton = styled(RectButton)`
   flex-direction: row;
   align-items: center;
@@ -40,17 +49,14 @@ export const GoBackButton = styled(RectButton)`
   border-radius: 16px;
 `;
 
-export const OrderList = styled(
-  FlatList as new () => FlatList<IOrderProduct>
-)`
+export const OrderList = styled(FlatList as new () => FlatList<IOrderProduct>)`
   width: 100%;
 `;
 
 export const NoContentContainer = styled.View`
   flex: 1;
   align-items: center;
-  justify-content: center;
-  margin-top: 100px;
+  margin-top: 50%;
 `;
 
 export const NoContentTitle = styled.Text`
@@ -64,7 +70,6 @@ export const NoContentImage = styled.Image`
   height: 200px;
   width: 200px;
 `;
-
 
 export const Item = styled.View`
   height: 74px;
@@ -134,7 +139,7 @@ export const SubTitle = styled.Text`
 `;
 
 export const Footer = styled.View`
-  padding: 0 24px ${getBottomSpace() + 24}px;
+  padding: 0 0 ${getBottomSpace() + 24}px;
 `;
 
 export const Button = styled(RectButton)`
@@ -149,7 +154,7 @@ export const Button = styled(RectButton)`
 `;
 
 export const ButtonIcon = styled.View`
-  background: rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.1);
   height: 56px;
   width: 60px;
   align-items: center;

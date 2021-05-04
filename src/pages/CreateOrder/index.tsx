@@ -1,14 +1,15 @@
-/* eslint-disable react/jsx-curly-newline */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 
 import { useNavigation } from '@react-navigation/core';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 import * as S from './styles';
 import colors from '../../styles/colors';
 import { useOrder } from '../../hooks/useOrder';
 import Load from '../../components/Load';
 import noContentImg from '../../assets/illustrations/no-food.png';
+import Input from '../../components/Input/Input';
 
 const CreateOrder: React.FC = () => {
   const { navigate } = useNavigation();
@@ -19,6 +20,7 @@ const CreateOrder: React.FC = () => {
   } = useOrder();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [orderDetails, setOrderDetails] = useState('');
 
   const handleNavigateBack = useCallback(() => {
     navigate('Gallery');
@@ -29,19 +31,25 @@ const CreateOrder: React.FC = () => {
 
     setIsLoading(true);
 
-    handleCreateOrder().then(_ => {
+    handleCreateOrder(orderDetails).then(() => {
       setIsLoading(false);
       navigate('Gallery');
     });
-  }, [handleCreateOrder, navigate, orderProducts.length]);
+  }, [handleCreateOrder, navigate, orderDetails, orderProducts.length]);
 
   return (
-    <>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      style={{ flex: 1 }}
+      enabled
+    >
       <S.Container>
         <S.OrderList
           contentContainerStyle={{
             paddingHorizontal: 24,
+            minHeight: '100%',
           }}
+          ListFooterComponentStyle={{ marginTop: 'auto' }}
           data={orderProducts}
           keyExtractor={item => item.product.id}
           ListHeaderComponent={
@@ -54,6 +62,7 @@ const CreateOrder: React.FC = () => {
                     color={colors.backgroundThree}
                   />
                 </S.GoBackButton>
+                {!!orderProducts.length && <S.Label>Foods</S.Label>}
               </S.HeaderContent>
             </S.Header>
           }
@@ -89,24 +98,43 @@ const CreateOrder: React.FC = () => {
               </S.PickQuantity>
             </S.Item>
           )}
+          ListFooterComponent={
+            !!orderProducts.length && (
+              <S.Footer>
+                <S.Label>Details</S.Label>
+                <Input
+                  containerStyle={{
+                    height: 200,
+                    paddingTop: 16,
+                    marginTop: 12,
+                    marginBottom: 24,
+                  }}
+                  placeholder="Details about your order..."
+                  handleInputText={setOrderDetails}
+                  numberOfLines={40}
+                  textAlignVertical="top"
+                />
+                <S.Button
+                  onPress={
+                    !orderProducts.length
+                      ? handleNavigateBack
+                      : handleFinishOrder
+                  }
+                >
+                  <S.ButtonIcon>
+                    <Feather name="arrow-right" size={20} color="#dd7329" />
+                  </S.ButtonIcon>
+                  <S.ButtonText>
+                    {!orderProducts.length ? 'Pick products' : 'Finish Order'}
+                  </S.ButtonText>
+                </S.Button>
+              </S.Footer>
+            )
+          }
         />
       </S.Container>
       {isLoading && <Load isShadow />}
-      <S.Footer>
-        <S.Button
-          onPress={
-            !orderProducts.length ? handleNavigateBack : handleFinishOrder
-          }
-        >
-          <S.ButtonIcon>
-            <Feather name="arrow-right" size={20} color="#dd7329" />
-          </S.ButtonIcon>
-          <S.ButtonText>
-            {!orderProducts.length ? 'Pick products' : 'Finish Order'}
-          </S.ButtonText>
-        </S.Button>
-      </S.Footer>
-    </>
+    </KeyboardAvoidingView>
   );
 };
 
