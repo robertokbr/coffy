@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/core';
@@ -12,9 +11,9 @@ import LargeItems from '../../components/LargeItems';
 import Items from '../../components/Items';
 import Fab from '../../components/Fab';
 import persistenceProvider from '../../shared/firebase';
-import IProduct from '../../shared/models/IProduct';
 import Load from '../../components/Load';
 import noImageUser from '../../assets/illustrations/no-img-user.png';
+import ICollection from '../../shared/models/ICollection';
 
 type ImagePickerReturn = {
   cancelled: boolean;
@@ -29,12 +28,12 @@ const Gallery: React.FC = () => {
   const { navigate } = useNavigation();
   const { user, updateUser } = useAuth();
 
-  const [products, setProducts] = useState<IProduct[]>([]);
+  const [collections, setCollections] = useState<ICollection[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    persistenceProvider.findProducts(product =>
-      setProducts(state => [...state, product]),
+    persistenceProvider.findCollections(collection =>
+      setCollections(state => [...state, collection]),
     );
   }, []);
 
@@ -53,46 +52,29 @@ const Gallery: React.FC = () => {
     })();
   }, []);
 
-  const drinkProducts = useMemo(
-    () => products.filter(product => product.type === 'drink'),
-    [products],
-  );
+  const items = useMemo(() => {
+    const listItems: S.GalleryItemProps[] = [];
 
-  const foodProducts = useMemo(
-    () => [...products].filter(product => product.type === 'food'),
-    [products],
-  );
+    collections.forEach(category => {
+      listItems.push(
+        {
+          render: () => <S.GalleryTitle>{category.title}</S.GalleryTitle>,
+          key: `${category.title}`,
+        },
+        {
+          render: () =>
+            category.isLargeSize ? (
+              <LargeItems products={category.content} />
+            ) : (
+              <Items products={category.content} />
+            ),
+          key: `${category.id}`,
+        },
+      );
+    });
 
-  const { items } = useMemo(() => {
-    return {
-      items: [
-        {
-          render: () => <S.GalleryTitle>Foods</S.GalleryTitle>,
-          key: 'FOODS_LIST_TITLE',
-        },
-        {
-          render: () => <LargeItems products={foodProducts} />,
-          key: 'FOODS_LIST',
-        },
-        {
-          render: () => <S.GalleryTitle>Drinks</S.GalleryTitle>,
-          key: 'DRINKS_LIST_TITLE',
-        },
-        {
-          render: () => <Items products={drinkProducts} />,
-          key: 'DRINKS_LIST',
-        },
-        {
-          render: () => <S.GalleryTitle>Other Foods</S.GalleryTitle>,
-          key: 'SECOND_FOODS_LIST_TITLE',
-        },
-        {
-          render: () => <LargeItems products={foodProducts} />,
-          key: 'SECOND_FOODS_LIST',
-        },
-      ],
-    };
-  }, [drinkProducts, foodProducts]);
+    return listItems;
+  }, [collections]);
 
   const handleNavigateBack = useCallback(() => {
     return navigate('Home');
@@ -131,7 +113,7 @@ const Gallery: React.FC = () => {
     }
   }, [updateUser, user]);
 
-  if (products.length <= 0) {
+  if (collections.length <= 0) {
     return <Load />;
   }
 
