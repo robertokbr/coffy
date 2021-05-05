@@ -7,7 +7,7 @@ export default interface IOrder {
   content: Array<{
     product: IProduct;
     quantity: number;
-  }>
+  }>;
   details?: string;
   date: Date;
   state: 'queue' | 'process' | 'done' | 'canceled';
