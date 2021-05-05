@@ -138,9 +138,7 @@ export const SubTitle = styled.Text`
   color: ${colors.blackTwo};
 `;
 
-export const Footer = styled.View`
-  padding: 0 0 ${getBottomSpace() + 24}px;
-`;
+export const TextArea = styled.View``;
 
 export const Button = styled(RectButton)`
   height: 56px;
@@ -149,8 +147,8 @@ export const Button = styled(RectButton)`
   flex-direction: row;
   align-items: center;
   overflow: hidden;
-  width: 100%;
   position: relative;
+  margin: 0 0 ${getBottomSpace() + 24}px;
 `;
 
 export const ButtonIcon = styled.View`

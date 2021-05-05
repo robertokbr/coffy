@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
-
 import { useNavigation } from '@react-navigation/core';
 import { KeyboardAvoidingView, Platform } from 'react-native';
+
 import * as S from './styles';
 import colors from '../../styles/colors';
 import { useOrder } from '../../hooks/useOrder';
@@ -50,6 +50,7 @@ const CreateOrder: React.FC = () => {
             minHeight: '100%',
           }}
           ListFooterComponentStyle={{ marginTop: 'auto' }}
+          showsVerticalScrollIndicator={false}
           data={orderProducts}
           keyExtractor={item => item.product.id}
           ListHeaderComponent={
@@ -100,7 +101,7 @@ const CreateOrder: React.FC = () => {
           )}
           ListFooterComponent={
             !!orderProducts.length && (
-              <S.Footer>
+              <S.TextArea>
                 <S.Label>Details</S.Label>
                 <Input
                   containerStyle={{
@@ -114,21 +115,13 @@ const CreateOrder: React.FC = () => {
                   numberOfLines={40}
                   textAlignVertical="top"
                 />
-                <S.Button
-                  onPress={
-                    !orderProducts.length
-                      ? handleNavigateBack
-                      : handleFinishOrder
-                  }
-                >
+                <S.Button onPress={handleFinishOrder}>
                   <S.ButtonIcon>
                     <Feather name="arrow-right" size={20} color="#dd7329" />
                   </S.ButtonIcon>
-                  <S.ButtonText>
-                    {!orderProducts.length ? 'Pick products' : 'Finish Order'}
-                  </S.ButtonText>
+                  <S.ButtonText>Finish Order</S.ButtonText>
                 </S.Button>
-              </S.Footer>
+              </S.TextArea>
             )
           }
         />
