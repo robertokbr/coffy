@@ -1,7 +1,7 @@
 import firebase, { database, storage } from 'firebase';
-import IProduct from '../../models/IProduct';
 import IOrder from '../../models/IOrder';
 import IUploadUserAvatarDTO from '../../dtos/IUploadUserAvatarDTO';
+import ICollection from '../../models/ICollection';
 
 class FirebasePersistenceProvider {
   private client: database.Database;
@@ -26,27 +26,25 @@ class FirebasePersistenceProvider {
     this.storage = firebase.app().storage();
   }
 
-  public async findProducts(
-    callback: (product: IProduct) => void,
+  public async findCollections(
+    callback: (collection: ICollection) => void,
   ): Promise<void> {
     const parse = (value: database.DataSnapshot) => {
-      const { name, type, description, price, image_url } = value.val();
+      const { title, isLargeSize, content } = value.val();
 
       const id = value.key;
 
       return {
         id,
-        name,
-        type,
-        description,
-        price,
-        image_url,
+        title,
+        isLargeSize,
+        content,
       };
     };
 
     this.client
 
-      .ref('products')
+      .ref('collections')
       .on('child_added', product => callback(parse(product)));
   }
 
@@ -112,8 +110,6 @@ class FirebasePersistenceProvider {
   }
 
   public async updateUserAvatar({ file, user_id }: IUploadUserAvatarDTO) {
-    console.log(user_id);
-
     return this.storage
       .ref(`users/user_${user_id}.jpg`)
       .put(file)
