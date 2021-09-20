@@ -1,4 +1,10 @@
-# [Moti Example](https://moti.fyi/)
+# Coffy
+* A simple application that provides coffee store customers a beautiful interface to create orders with ease.
+
+
+
+
+# Project made with [Moti](https://moti.fyi/)
 
 <p>
   <!-- iOS -->
