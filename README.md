@@ -2,7 +2,7 @@
 * A simple application that provides coffee store customers a beautiful interface to create orders with ease.
 
 
-<img src="https://github.dev/robertokbr/coffy/blob/main/.Github/picture.png" />
+<img src="https://github.com/robertokbr/coffy/blob/main/.Github/picture.png" />
 
 # Project made with [Moti](https://moti.fyi/)
 
