@@ -1,5 +1,5 @@
 # Coffy
-* A simple application that provides coffee store customers a beautiful interface to create orders with ease.
+* A simple application that provides to the coffee store customers a beautiful interface to create orders with ease.
 
 
 <img src="https://github.com/robertokbr/coffy/blob/main/.Github/picture.png" />
