@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Orders {
+  id         Int           @id @default(autoincrement())
+  customer   Json
+  stateCode  Int
+  createdAt  DateTime      @default(now())
+  items      OrderItems[]
+  orderState OrderStates?  @relation(fields: [stateCode], references: [code])
+}
+
+model Collections {
+  id Int @id @default(autoincrement())
+  title String
+  isLargeSize Boolean @default(true)
+  itemsCollections ItemsCollections[]
+}
+
+model ItemsCollections {
+  id Int @id @default(autoincrement())
+  collectionId Int
+  itemId Int
+  item Items? @relation(fields: [itemId], references: [id])
+  collection Collections? @relation(fields: [collectionId], references: [id])
+}
+
+model Items {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String
+  price       Int
+  imageURL    String
+  isAvailable Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now())
+  orders      OrderItems[]
+  itemsCollections ItemsCollections[]
+}
+
+model OrderItems {
+  id      Int      @id @default(autoincrement())
+  orderId Int
+  itemId  Int
+  amount  Int
+  isValid Boolean  @default(true)
+  item    Items?   @relation(fields: [itemId], references: [id])
+  order   Orders?  @relation(fields: [orderId], references: [id])
+}
+
+model OrderStates {
+  code        Int     @id
+  description String
+  orders      Orders[]
+}
